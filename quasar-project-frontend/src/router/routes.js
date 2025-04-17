@@ -3,7 +3,17 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue') }
+      { path: '', component: () => import('pages/IndexPage.vue') },
+      {
+        path: 'Calculator',
+        name: 'Calculator',
+        component: () => import('pages/Calculator.vue')
+      },
+      {
+        path: 'StockPrice',
+        name: 'StockPrice',
+        component: () => import('pages/StockPrice.vue')
+      }
     ]
   },
 

@@ -17,6 +17,11 @@
 
         <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
+      <q-tabs align="left">
+        <template v-for="(item, index) in linksList" :key="index">
+          <q-route-tab :to="`/${item.name}`" :label="item.title" />
+        </template>
+      </q-tabs>
     </q-header>
 
     <q-drawer
@@ -49,49 +54,37 @@
 import { ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 
+defineOptions({
+  name: 'MainLayout'
+})
+
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Calculator',
+    // caption: 'quasar.dev',
+    name: 'Calculator',
+    icon: 'fa-solid fa-calculator',
+    link: '/calculator'
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
+    title: 'Stock Price',
+    // caption: 'quasar.dev',
+    name: 'StockPrice',
+    icon: 'fa-solid fa-money-bill-trend-up',
+    link: '/stockPrice'
   },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
+  // {
+  //   title: 'Github',
+  //   caption: 'github.com/quasarframework',
+  //   icon: 'code',
+  //   link: 'https://github.com/quasarframework'
+  // },
+  // {
+  //   title: 'Quasar Awesome',
+  //   caption: 'Community Quasar projects',
+  //   icon: 'favorite',
+  //   link: 'https://awesome.quasar.dev'
+  // }
 ]
 
 const leftDrawerOpen = ref(false)

@@ -10,11 +10,22 @@ let sender
 app.use(cors());
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.use(express.static(path.join(__dirname,'public')));
 
+const frontendPath = path.join(__dirname, '../quasar-project-frontend/dist/spa'); // Adjust path if needed
+console.log(frontendPath)
+app.use(express.static(frontendPath));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(frontendPath, 'index.html'), function (err) {
+    if (err) res.status(404).send('File not found');
+  });
+});
+
+app.use(express.static(path.join(__dirname,'public')));
 
 app.get('/', (req, res) => {
   // console.log(req); 
+  console.log(__dirname)
   res.sendFile(path.join(__dirname, '/public', 'sendSocket.html'), function(err) {
     if (err) res.send(404);
   });
@@ -45,122 +56,6 @@ app.post('/event', (req, res) => {
     res.send(`Got a POST request ${JSON.stringify(req.body)}`, );
     
     res.status(200).send()
-});
-
-app.get('/mediaData', (req, res) => {
-  const params = req.query
-  console.log(req.query.next_hour)
-
-  const dataNextHours = {
-    "media": [
-        {
-            "file": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
-            "type": "video",
-            "url": 0,
-            "media_id": 2010,
-            "spMarquee": [],
-            "duration": 10,
-            "emergency": 0
-        },
-        {
-            "file": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-            "type": "video",
-            "url": 0,
-            "media_id": 2020,
-            "spMarquee": [],
-            "duration": 10,
-            "emergency": 0
-        },
-        {
-            "file": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-            "type": "video",
-            "url": 0,
-            "media_id": 2030,
-            "spMarquee": [],
-            "duration": 10,
-            "emergency": 0
-        },
-        {
-            "file": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
-            "type": "video",
-            "url": 0,
-            "media_id": 2040,
-            "spMarquee": [],
-            "duration": 10,
-            "emergency": 0
-        },
-    ],
-    "marquee": [
-      "進入門市請依法配戴口罩",
-      "【託播專線】02-2627-0333 前線媒體",
-      "純白和弦正式公測!浠和夏語遙闖蕩歌劇世界",
-      "松山奉天宮新式光明燈 結合LINE上傳心願",
-      "老子有錢送8百萬億!雙B、奧迪、特斯拉。送啦",
-      "寶島娛樂城 山中森林聯名機台 登入送百萬",
-      "上班打工人，下班當掌門，快來仙宗大掌門!",
-      "花舞宮廷狂歡三週年，百萬露營獎品等你來",
-      "《拉斯》1百萬0週年 與愛莎一同慶祝領億元紅包",
-      "《盜墓筆記》手遊下載即送代言人限定稱號",
-      "《幻想三國誌—天元異事錄》新篇章上市！"
-    ],
-    "bgm": [
-      {
-          "file": "/public-vue-edge/media/audio1.c4b4141e.mp3",
-          "type": "audio",
-          "url": 0,
-          "media_id": "A1",
-          "spMarquee": [],
-          "duration": 36,
-          "emergency": 0
-      },
-      {
-          "file": "/public-vue-edge/media/audio2.29be3008.mp3",
-          "type": "audio",
-          "url": 0,
-          "media_id": "A2",
-          "spMarquee": [],
-          "duration": 20,
-          "emergency": 0
-      },
-      {
-          "file": "/public-vue-edge/media/audio3.f1ecf385.mp3",
-          "type": "audio",
-          "url": 0,
-          "media_id": "A3",
-          "spMarquee": [],
-          "duration": 10,
-          "emergency": 0
-      },
-      {
-          "file": "/public-vue-edge/media/audio4.0dbfee0c.mp3",
-          "type": "audio",
-          "url": 0,
-          "media_id": "A4",
-          "spMarquee": [],
-          "duration": 61,
-          "emergency": 0
-      },
-      {
-          "file": "/public-vue-edge/media/audio5.433874a1.mp3",
-          "type": "audio",
-          "url": 0,
-          "media_id": "A5",
-          "spMarquee": [],
-          "duration": 61,
-          "emergency": 0
-      }
-    ],
-    "schedule": {
-      "type": "OpenChannel",
-      "uuid": "J5SPFRQ5IJSYV",
-      "media": "17",
-      "marquee": "17",
-      "bgm": "17"
-    },
-    'uuid': "J5SPFRQ5IJSYV",
-    "hour_hash": "833305bb17e090ddf088645329590d72b110ab9500f593a762beb15c0dd78f2a",
-  }
-  res.send(dataNextHours)
 });
 
 app.post('/send', (req, res) => {
