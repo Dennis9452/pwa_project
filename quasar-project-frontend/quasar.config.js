@@ -89,7 +89,8 @@ export default defineConfig((ctx) => {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#devserver
     devServer: {
       // https: true,
-      open: true // opens browser window automatically
+      open: true, // opens browser window automatically
+      allowedHosts: ['clear-bass-heroic.ngrok-free.app'],
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#framework
